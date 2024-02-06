@@ -6,7 +6,7 @@
     "build": "tsc",
     "fmt": "fmt",
     "lint": "lint",
-    "test": "npm run build && cd ./build/ && node --test ."
+    "test": "cd ./build/ && node --test ."
   },
   "devDependencies": {
     "@types/node": "^20.11.16",
