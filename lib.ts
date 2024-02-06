@@ -72,6 +72,10 @@ function readKey(input: string): [string, string] {
   let key: string = "";
   for (let i = 0; i < input.length; i++) {
     const c = input[i];
+    if (typeof c === "undefined") {
+      break;
+    }
+
     if (isValidKeyChar(c)) {
       key += c;
 
@@ -86,12 +90,12 @@ function readKey(input: string): [string, string] {
   throw new Error("Invalid key.");
 }
 
-function readSeparator(input: string): [string, string] {
+function consumeSeparator(input: string): string {
   if (input.startsWith("=")) {
-    return ["=", input.substring(1)];
+    return input.substring(1);
   }
   if (input.startsWith(" = ")) {
-    return [" = ", input.substring(" = ".length)];
+    return input.substring(" = ".length);
   }
 
   throw new Error("Invalid separator.");
@@ -147,7 +151,12 @@ function readValueQuoted(input: string): [string, string] {
 
 function readValueUnquoted(input: string): [string, string] {
   const parts = input.split(" ");
+
   const value = parts[0];
+  if (typeof value === "undefined") {
+    throw new Error("Invalid value.");
+  }
+
   const remaining = parts.slice(1).join(" ");
   return [value, remaining];
 }
@@ -170,10 +179,9 @@ function parseKvConnectionString(kvConnectionString: string): KeyValuePair[] {
 
     let key: string;
     let value: string;
-    let _separator: string;
 
     [key, remaining] = readKey(remaining);
-    [_separator, remaining] = readSeparator(remaining);
+    remaining = consumeSeparator(remaining);
     [value, remaining] = readValue(remaining);
 
     const pair = {
