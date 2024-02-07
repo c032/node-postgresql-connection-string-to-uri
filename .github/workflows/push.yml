@@ -1,0 +1,82 @@
+name: "push"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  tests:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name: "Install dependencies."
+        run: |
+          npm ci
+
+      - name: "Build."
+        run: |
+          npm run build
+
+      - name: "Run tests."
+        run: |
+          npm run test
+
+  lint:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name: "Install dependencies."
+        run: |
+          npm ci
+
+      - name: "Lint."
+        run: |
+          npm run lint
+
+  publish:
+    runs-on: "ubuntu-latest"
+    needs:
+      - "lint"
+      - "tests"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+        with:
+          ref: "js"
+
+      - name: "Create worktree from `main` branch."
+        run: |
+          git fetch --all
+          git worktree add worktree-main main
+
+      - name: "Build worktree."
+        run: |
+          cd worktree-main
+          npm ci
+          npm run build
+
+      - name: "Move built files."
+        run: |
+          mv -v worktree-main/build/* .
+
+      - name: "Remove worktree."
+        run: |
+          git worktree remove -f worktree-main
+
+      - name: "`git config`"
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "<>"
+
+      - name: "Commit and push"
+        run: |
+          git add --all -v
+          git commit -m 'Update'
+          git push -u origin js
