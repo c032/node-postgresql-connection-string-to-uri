@@ -78,5 +78,9 @@ jobs:
       - name: "Commit and push"
         run: |
           git add --all -v
+
+          # Abort if there's no changed files.
+          git diff --cached --quiet && exit 0
+
           git commit -m 'Update'
           git push -u origin js
