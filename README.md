@@ -1,4 +1,4 @@
-# node-postgresql-connection-string-to-uri
+# node-postgresql-keyword-value-to-uri
 
 Convert PostgreSQL's keyword/value connection strings to URI connection
 strings.
@@ -9,7 +9,7 @@ strings.
 npm install \
   --ignore-scripts \
   --save \
-  'github:c032/node-postgresql-connection-string-to-uri#js'
+  'github:c032/node-postgresql-keyword-value-to-uri#js'
 ```
 
 ## License

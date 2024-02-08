@@ -1,12 +1,13 @@
 {
-  "name": "node-postgresql-connection-string-to-uri",
+  "name": "node-postgresql-keyword-value-to-uri",
   "version": "0.0.0",
   "private": true,
+  "license": "MPL-2.0",
   "scripts": {
     "build": "tsc",
     "fmt": "fmt",
     "lint": "lint",
-    "test": "cd ./build/ && node --test ."
+    "test": "tsc && cd ./build/ && node --test ."
   },
   "devDependencies": {
     "@types/node": "^20.11.16",

@@ -1,7 +1,7 @@
 import { strict as assert } from "node:assert";
 import { describe, it } from "node:test";
 
-import { kvConnectionStringToUri } from "./lib";
+import { keywordValueToUri } from "./lib";
 
 const TEST_CASES: Record<string, string> = {
   "": "postgresql://",
@@ -13,10 +13,10 @@ const TEST_CASES: Record<string, string> = {
 };
 
 describe("lib", () => {
-  describe("kvConnectionStringToUri", () => {
+  describe("keywordValueToUri", () => {
     Object.entries(TEST_CASES).forEach(([input, expectedOutput]) => {
       it(`converts ${JSON.stringify(input)} as ${JSON.stringify(expectedOutput)}`, () => {
-        const actualOutput = kvConnectionStringToUri(input);
+        const actualOutput = keywordValueToUri(input);
 
         assert.equal(actualOutput, expectedOutput);
       });
