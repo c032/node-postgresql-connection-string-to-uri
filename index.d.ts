@@ -1,1 +1,1 @@
-export * from "./lib";
+export { keywordValueToUri } from "./keyword-value";
