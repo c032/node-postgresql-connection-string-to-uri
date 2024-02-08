@@ -1,4 +1,4 @@
-import { parseKeywordValueConnectionString } from "./parser";
+import { KeyValuePair } from "./parser";
 
 interface ConnectionUriObject {
   userspec?: {
@@ -16,57 +16,11 @@ interface ConnectionUriObject {
   }[];
 }
 
-function connectionUriObjectToString(uriObject: ConnectionUriObject): string {
-  let userspec: string = "";
-  if (uriObject.userspec) {
-    const { user, password } = uriObject.userspec;
-    userspec += user;
-    if (password) {
-      userspec += `:${encodeURIComponent(password)}`;
-    }
-
-    userspec += "@";
-  }
-
-  let hostspec: string = "";
-  if (uriObject.hostspec) {
-    const { host, port } = uriObject.hostspec;
-    if (host) {
-      hostspec += host;
-    }
-    if (typeof port !== "undefined") {
-      hostspec += `:${port}`;
-    }
-  }
-
-  let dbname: string = "";
-  if (typeof uriObject.dbname !== "undefined") {
-    dbname += `/${encodeURIComponent(uriObject.dbname)}`;
-  }
-
-  let paramspec: string = "";
-  if (uriObject.paramspec) {
-    paramspec += "?";
-
-    paramspec += uriObject.paramspec
-      .map((item) => {
-        const { name, value } = item;
-        return `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
-      })
-      .join("&");
-  }
-
-  return `postgresql://${userspec}${hostspec}${dbname}${paramspec}`;
-}
-
-export function keywordValueToUri(kvConnectionString: string): string {
-  if (kvConnectionString === "") {
-    return "postgresql://";
-  }
-
-  const pairs = parseKeywordValueConnectionString(kvConnectionString);
-
+function pairsToConnectionUriObject(
+  pairs: KeyValuePair[],
+): ConnectionUriObject {
   const uriObject: ConnectionUriObject = {};
+
   pairs.forEach((pair) => {
     const { key, value } = pair;
     switch (key) {
@@ -123,7 +77,55 @@ export function keywordValueToUri(kvConnectionString: string): string {
     }
   });
 
-  const connectionStringUri = connectionUriObjectToString(uriObject);
+  return uriObject;
+}
+
+function connectionUriObjectToString(uriObject: ConnectionUriObject): string {
+  let userspec: string = "";
+  if (uriObject.userspec) {
+    const { user, password } = uriObject.userspec;
+    userspec += user;
+    if (password) {
+      userspec += `:${encodeURIComponent(password)}`;
+    }
+
+    userspec += "@";
+  }
+
+  let hostspec: string = "";
+  if (uriObject.hostspec) {
+    const { host, port } = uriObject.hostspec;
+    if (host) {
+      hostspec += host;
+    }
+    if (typeof port !== "undefined") {
+      hostspec += `:${port}`;
+    }
+  }
+
+  let dbname: string = "";
+  if (typeof uriObject.dbname !== "undefined") {
+    dbname += `/${encodeURIComponent(uriObject.dbname)}`;
+  }
+
+  let paramspec: string = "";
+  if (uriObject.paramspec) {
+    paramspec += "?";
+
+    paramspec += uriObject.paramspec
+      .map((item) => {
+        const { name, value } = item;
+        return `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
+      })
+      .join("&");
+  }
+
+  return `postgresql://${userspec}${hostspec}${dbname}${paramspec}`;
+}
+
+export function pairsToConnectionString(pairs: KeyValuePair[]): string {
+  const connectionUriObject = pairsToConnectionUriObject(pairs);
+  const connectionStringUri = connectionUriObjectToString(connectionUriObject);
 
   return connectionStringUri;
 }

@@ -1,7 +1,7 @@
 import { strict as assert } from "node:assert";
 import { describe, it } from "node:test";
 
-import { keywordValueToUri } from "./lib";
+import { keywordValueToUri } from "./keyword-value";
 
 const TEST_CASES: Record<string, string> = {
   "": "postgresql://",
@@ -12,7 +12,7 @@ const TEST_CASES: Record<string, string> = {
     "postgresql://user_name:correct%20horse%20battery%20staple@postgresql/database_name?sslmode=disable",
 };
 
-describe("lib", () => {
+describe("keyword-value", () => {
   describe("keywordValueToUri", () => {
     Object.entries(TEST_CASES).forEach(([input, expectedOutput]) => {
       it(`converts ${JSON.stringify(input)} as ${JSON.stringify(expectedOutput)}`, () => {
