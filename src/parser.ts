@@ -109,7 +109,9 @@ function readValue(input: string): [string, string] {
   return readValueUnquoted(input);
 }
 
-export function parseKeywordValueConnectionString(kvConnectionString: string): KeyValuePair[] {
+export function parseKeywordValueConnectionString(
+  kvConnectionString: string,
+): KeyValuePair[] {
   const pairs: KeyValuePair[] = [];
 
   let remaining: string = kvConnectionString;
