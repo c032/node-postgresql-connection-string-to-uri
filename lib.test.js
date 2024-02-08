@@ -10,10 +10,10 @@ const TEST_CASES = {
     "host=postgresql user=user_name password='correct horse battery staple' dbname=database_name sslmode=disable": "postgresql://user_name:correct%20horse%20battery%20staple@postgresql/database_name?sslmode=disable",
 };
 (0, node_test_1.describe)("lib", () => {
-    (0, node_test_1.describe)("kvConnectionStringToUri", () => {
+    (0, node_test_1.describe)("keywordValueToUri", () => {
         Object.entries(TEST_CASES).forEach(([input, expectedOutput]) => {
             (0, node_test_1.it)(`converts ${JSON.stringify(input)} as ${JSON.stringify(expectedOutput)}`, () => {
-                const actualOutput = (0, lib_1.kvConnectionStringToUri)(input);
+                const actualOutput = (0, lib_1.keywordValueToUri)(input);
                 node_assert_1.strict.equal(actualOutput, expectedOutput);
             });
         });

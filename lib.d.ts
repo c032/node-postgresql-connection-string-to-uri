@@ -1,1 +1,1 @@
-export declare function kvConnectionStringToUri(kvConnectionString: string): string;
+export declare function keywordValueToUri(kvConnectionString: string): string;
