@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pairsToConnectionString = void 0;
+exports.pairsToConnectionString = pairsToConnectionString;
 function pairsToConnectionUriObject(pairs) {
     const uriObject = {};
-    pairs.forEach((pair) => {
+    for (const pair of pairs) {
         const { key, value } = pair;
         switch (key) {
             case "host":
@@ -19,7 +19,7 @@ function pairsToConnectionUriObject(pairs) {
                 }
                 uriObject.hostspec = {
                     ...(uriObject.hostspec || {}),
-                    port: parseInt(value, 10),
+                    port: Number.parseInt(value, 10),
                 };
                 break;
             case "dbname":
@@ -49,7 +49,7 @@ function pairsToConnectionUriObject(pairs) {
                 });
                 break;
         }
-    });
+    }
     return uriObject;
 }
 function connectionUriObjectToString(uriObject) {
@@ -93,4 +93,3 @@ function pairsToConnectionString(pairs) {
     const connectionStringUri = connectionUriObjectToString(connectionUriObject);
     return connectionStringUri;
 }
-exports.pairsToConnectionString = pairsToConnectionString;

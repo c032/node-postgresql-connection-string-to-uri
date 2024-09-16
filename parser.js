@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseKeywordValueConnectionString = void 0;
+exports.parseKeywordValueConnectionString = parseKeywordValueConnectionString;
 const REGEXP_KEY_CHAR = /[a-z_]/;
 function isValidKeyChar(c) {
     return REGEXP_KEY_CHAR.test(c);
@@ -34,13 +34,13 @@ function readValueQuoted(input) {
     if (!input.startsWith("'")) {
         throw new Error("Expected single quote.");
     }
-    let escape = false;
+    let shouldEscape = false;
     let value = "";
     let remaining = input.substring(1);
     for (let i = 0; i < remaining.length; i++) {
         const c = remaining[i];
-        if (escape) {
-            escape = false;
+        if (shouldEscape) {
+            shouldEscape = false;
             // Only support escaping `'` and `\`.
             if (c !== "\\" && c !== "'") {
                 throw new Error("Value tried to escape a character that was neither a single quotation mark nor a backslash.");
@@ -49,7 +49,7 @@ function readValueQuoted(input) {
             continue;
         }
         if (c === "\\") {
-            escape = true;
+            shouldEscape = true;
             continue;
         }
         if (c === "'") {
@@ -97,4 +97,3 @@ function parseKeywordValueConnectionString(kvConnectionString) {
     } while (remaining.length < prevLength && remaining !== "");
     return pairs;
 }
-exports.parseKeywordValueConnectionString = parseKeywordValueConnectionString;

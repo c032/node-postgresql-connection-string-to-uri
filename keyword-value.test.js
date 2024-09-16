@@ -11,11 +11,11 @@ const TEST_CASES = {
 };
 (0, node_test_1.describe)("keyword-value", () => {
     (0, node_test_1.describe)("keywordValueToUri", () => {
-        Object.entries(TEST_CASES).forEach(([input, expectedOutput]) => {
+        for (const [input, expectedOutput] of Object.entries(TEST_CASES)) {
             (0, node_test_1.it)(`converts ${JSON.stringify(input)} as ${JSON.stringify(expectedOutput)}`, () => {
                 const actualOutput = (0, keyword_value_1.keywordValueToUri)(input);
                 node_assert_1.strict.equal(actualOutput, expectedOutput);
             });
-        });
+        }
     });
 });

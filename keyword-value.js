@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.keywordValueToUri = void 0;
+exports.keywordValueToUri = keywordValueToUri;
 const parser_1 = require("./parser");
 const connection_uri_object_1 = require("./connection-uri-object");
 function keywordValueToUri(kvConnectionString) {
@@ -11,4 +11,3 @@ function keywordValueToUri(kvConnectionString) {
     const connectionStringUri = (0, connection_uri_object_1.pairsToConnectionString)(pairs);
     return connectionStringUri;
 }
-exports.keywordValueToUri = keywordValueToUri;
