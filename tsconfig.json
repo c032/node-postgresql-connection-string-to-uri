@@ -1,7 +1,7 @@
 {
-  "extends": "node-base-typescript",
-  "compilerOptions": {
-    "outDir": "./build",
-    "declaration": true
-  }
+	"extends": "node-base-typescript",
+	"compilerOptions": {
+		"outDir": "./build",
+		"declaration": true
+	}
 }

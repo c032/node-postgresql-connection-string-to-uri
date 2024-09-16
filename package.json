@@ -1,17 +1,17 @@
 {
-  "name": "node-postgresql-keyword-value-to-uri",
-  "version": "0.0.0",
-  "private": true,
-  "license": "MPL-2.0",
-  "scripts": {
-    "build": "tsc",
-    "fmt": "biome format --write .",
-    "lint": "biome lint --write .",
-    "test": "tsc && cd ./build/ && node --test ."
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.1",
-    "@types/node": "^22.5.5",
-    "node-base-typescript": "github:c032/node-base-typescript"
-  }
+	"name": "node-postgresql-keyword-value-to-uri",
+	"version": "0.0.0",
+	"private": true,
+	"license": "MPL-2.0",
+	"scripts": {
+		"build": "tsc",
+		"fmt": "biome format --write .",
+		"lint": "biome lint --write .",
+		"test": "tsc && cd ./build/ && node --test ."
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.1",
+		"@types/node": "^22.5.5",
+		"node-base-typescript": "github:c032/node-base-typescript"
+	}
 }
