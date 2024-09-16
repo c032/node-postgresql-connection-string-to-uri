@@ -10,7 +10,7 @@ function isValidKeyChar(c: string): boolean {
 }
 
 function readKeyword(input: string): [string, string] {
-	let key: string = "";
+	let key = "";
 	for (let i = 0; i < input.length; i++) {
 		const c = input[i];
 		if (typeof c === "undefined") {
@@ -47,15 +47,15 @@ function readValueQuoted(input: string): [string, string] {
 		throw new Error("Expected single quote.");
 	}
 
-	let escape: boolean = false;
+	let shouldEscape = false;
 
-	let value: string = "";
+	let value = "";
 	let remaining = input.substring(1);
 	for (let i = 0; i < remaining.length; i++) {
 		const c = remaining[i];
 
-		if (escape) {
-			escape = false;
+		if (shouldEscape) {
+			shouldEscape = false;
 
 			// Only support escaping `'` and `\`.
 			if (c !== "\\" && c !== "'") {
@@ -70,7 +70,7 @@ function readValueQuoted(input: string): [string, string] {
 		}
 
 		if (c === "\\") {
-			escape = true;
+			shouldEscape = true;
 
 			continue;
 		}
@@ -115,7 +115,7 @@ export function parseKeywordValueConnectionString(
 	const pairs: KeyValuePair[] = [];
 
 	let remaining: string = kvConnectionString;
-	let prevLength: number = -1;
+	let prevLength = -1;
 
 	do {
 		prevLength = remaining.length;

@@ -1,4 +1,4 @@
-import { KeyValuePair } from "./parser";
+import type { KeyValuePair } from "./parser";
 
 interface ConnectionUriObject {
 	userspec?: {
@@ -21,7 +21,7 @@ function pairsToConnectionUriObject(
 ): ConnectionUriObject {
 	const uriObject: ConnectionUriObject = {};
 
-	pairs.forEach((pair) => {
+	for (const pair of pairs) {
 		const { key, value } = pair;
 		switch (key) {
 			case "host":
@@ -39,7 +39,7 @@ function pairsToConnectionUriObject(
 
 				uriObject.hostspec = {
 					...(uriObject.hostspec || {}),
-					port: parseInt(value, 10),
+					port: Number.parseInt(value, 10),
 				};
 
 				break;
@@ -75,13 +75,13 @@ function pairsToConnectionUriObject(
 
 				break;
 		}
-	});
+	}
 
 	return uriObject;
 }
 
 function connectionUriObjectToString(uriObject: ConnectionUriObject): string {
-	let userspec: string = "";
+	let userspec = "";
 	if (uriObject.userspec) {
 		const { user, password } = uriObject.userspec;
 		userspec += user;
@@ -92,7 +92,7 @@ function connectionUriObjectToString(uriObject: ConnectionUriObject): string {
 		userspec += "@";
 	}
 
-	let hostspec: string = "";
+	let hostspec = "";
 	if (uriObject.hostspec) {
 		const { host, port } = uriObject.hostspec;
 		if (host) {
@@ -103,12 +103,12 @@ function connectionUriObjectToString(uriObject: ConnectionUriObject): string {
 		}
 	}
 
-	let dbname: string = "";
+	let dbname = "";
 	if (typeof uriObject.dbname !== "undefined") {
 		dbname += `/${encodeURIComponent(uriObject.dbname)}`;
 	}
 
-	let paramspec: string = "";
+	let paramspec = "";
 	if (uriObject.paramspec) {
 		paramspec += "?";
 

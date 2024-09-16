@@ -14,12 +14,12 @@ const TEST_CASES: Record<string, string> = {
 
 describe("keyword-value", () => {
 	describe("keywordValueToUri", () => {
-		Object.entries(TEST_CASES).forEach(([input, expectedOutput]) => {
+		for (const [input, expectedOutput] of Object.entries(TEST_CASES)) {
 			it(`converts ${JSON.stringify(input)} as ${JSON.stringify(expectedOutput)}`, () => {
 				const actualOutput = keywordValueToUri(input);
 
 				assert.equal(actualOutput, expectedOutput);
 			});
-		});
+		}
 	});
 });
