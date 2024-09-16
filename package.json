@@ -5,12 +5,13 @@
   "license": "MPL-2.0",
   "scripts": {
     "build": "tsc",
-    "fmt": "fmt",
-    "lint": "lint",
+    "fmt": "biome format --write .",
+    "lint": "biome lint --write .",
     "test": "tsc && cd ./build/ && node --test ."
   },
   "devDependencies": {
-    "@types/node": "^20.11.16",
+    "@biomejs/biome": "^1.9.1",
+    "@types/node": "^22.5.5",
     "node-base-typescript": "github:c032/node-base-typescript"
   }
 }
